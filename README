@@ -1,4 +1,11 @@
 kontinu
 =======
 
-typed javascript library to create endless scroll.
+Typed JavaScript library to create endless scroll.
+
+Quick Start
+===========
+
+Required dependencies:
+
+    - TypeScript transpiler (tsc, swc)
