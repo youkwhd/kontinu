@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../dist/kontinu.js"></script>
+    <title>endless horse copy</title>
+    <style>
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>kontinu</h1>
+    <p>The art is copied from <a href="http://endless.horse">endless.horse</a></p>
+    <pre id="parent">   ,
+_,,)\.~,,._
+(()`  ``)\))),,_
+ |     \ ''((\)))),,_          ____
+ |6`   |   ''((\())) "-.____.-"    `-.-,
+ |    .'\    ''))))'                  \)))
+ |   |   `.     ''                     ((((
+ \, _)     \/                          |))))
+  `'        |                          (((((
+            \                  |       ))))))
+             `|    |           ,\     /((((((
+              |   / `-.______.<  \   |  )))))
+              |   |  /         `. \  \  ((((
+              |  / \ |           `.\  | (((
+              \  | | |             )| |  ))
+               | | | |             || |  '</pre>
+    <script>
+        kontinu.init(document.querySelector("#parent"), (lastElement) => {
+            const n = 100;
+            let elements = new Array(n);
+
+            for (let i = 0; i < n; i++) {
+                let el = document.createElement("pre");
+                el.textContent = "	       | | | |             || |  ";
+                elements[i] = el;
+            }
+
+
+            // prepending to the older element, so reverse the array
+            elements.reverse();
+            elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
+
+            return elements[0];
+        })
+    </script>
+</body>
+</html>
