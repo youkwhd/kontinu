@@ -1,13 +1,19 @@
 "use strict";
 
-const kontinu = {
-    // TODO: what does onHit callback suppose to accept? also returns
-    init: (children: Element, onHit: Function): void => {
-        const config = {
-            root: null,
-            threshold: 0.5, /* 50% */
-        };
+type Kontinu = {
+    config: IntersectionObserverInit,
+    init: (children: Element, onHit: (el: Element) => Element) => void,
+}
 
+const kontinu: Kontinu = {
+    config: {
+        root: null,
+        rootMargin: "0px 0px 5px 0px",
+        // threshold: 0.5, /* 50% */
+    },
+
+    // TODO: what does onHit callback suppose to accept? also returns
+    init: (children: Element, onHit: (el: Element) => Element): void => {
         new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
             const entry: IntersectionObserverEntry = entries[0];
 
@@ -20,7 +26,7 @@ const kontinu = {
                 observer.unobserve(entry.target);
                 return kontinu.init(lastElement, onHit);
             }
-        }, config)
+        }, kontinu.config)
             .observe(children);
     },
 };
