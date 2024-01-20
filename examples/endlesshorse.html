@@ -40,7 +40,7 @@ _,,)\.~,,._
     <script>
         const parentElement = document.querySelector("#parent");
 
-        const update = (lastElement) => {
+        const onIntersection = (lastElement) => {
             const n = 100;
             let elements = new Array(n);
 
@@ -53,11 +53,11 @@ _,,)\.~,,._
             // prepending to the older element, so reverse the array
             elements.reverse();
             elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
-            
+
             return elements[0];
         }
 
-        kontinu.__init(parentElement, update);
+        kontinu.__init(parentElement, onIntersection);
     </script>
 </body>
 </html>
