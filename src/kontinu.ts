@@ -16,6 +16,10 @@ const kontinu: Kontinu = {
         window.addEventListener("scroll", () => {
             kontinu.__onIntersection(kontinu.__latestElement, callback);
         });
+
+        window.addEventListener("resize", () => {
+            kontinu.__onIntersection(kontinu.__latestElement, callback);
+        });
     },
 
     __onIntersection: (el: HTMLElement, callback: Function) => {
