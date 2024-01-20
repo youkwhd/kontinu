@@ -11,6 +11,14 @@ Required dependencies:
 
     - TypeScript transpiler (tsc, swc)
 
+Building
+--------
+
+Use your favorite TypeScript transpiler, this library is
+configured using swc:
+
+    ./build.sh
+
 Usage
 -----
 
