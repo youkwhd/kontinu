@@ -9,12 +9,18 @@
         pre {
             margin: 0;
         }
+
+        main {
+            width: 380px;
+            padding-top: 172px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
-    <h1>kontinu</h1>
-    <p>The art is copied from <a href="http://endless.horse">endless.horse</a></p>
-    <pre id="parent">   ,
+    <main>
+        <p>The art is copied from <a href="http://endless.horse">endless.horse</a></p>
+        <pre id="parent">   ,
 _,,)\.~,,._
 (()`  ``)\))),,_
  |     \ ''((\)))),,_          ____
@@ -30,6 +36,7 @@ _,,)\.~,,._
               |  / \ |           `.\  | (((
               \  | | |             )| |  ))
                | | | |             || |  '</pre>
+    </main>
     <script>
         const parentElement = document.querySelector("#parent");
 
@@ -46,8 +53,7 @@ _,,)\.~,,._
             // prepending to the older element, so reverse the array
             elements.reverse();
             elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
-
-            elements[0].style = "background-color: red;";
+            
             return elements[0];
         }
 
