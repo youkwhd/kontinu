@@ -1,7 +1,8 @@
 kontinu
 =======
 
-Typed JavaScript library to create endless scroll.
+Typed JavaScript library to create endless scroll with no
+third-party dependency nor Web API involed.
 
 Quick Start
 ===========
