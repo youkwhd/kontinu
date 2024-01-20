@@ -41,16 +41,21 @@ const kontinu: Kontinu = {
     __isIntersecting: (el: HTMLElement, onHit: Function) => {
         // assert window != null
 
-        const elementCoordinates = { x: el.clientLeft, y: el.clientTop };
+        const elementCoordinates = { x: el.offsetLeft, y: el.offsetTop };
         const elementHeight = el.clientHeight;
 
         // surpasses the element
         if (window.scrollY > elementCoordinates.y + elementHeight) {
+            return false;
         }
 
         // intersecting the element
         if (window.scrollY + window.innerHeight >= elementCoordinates.y) {
+            onHit();
+            return true;
         }
+
+        return false;
     }
 };
 
