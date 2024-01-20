@@ -28,3 +28,8 @@ case I pass an empty div with the id of #start.
 
 It also requires a function callback on intersection which
 should append and return the new element.
+
+Examples
+--------
+
+You can find examples from the examples/ folder.
