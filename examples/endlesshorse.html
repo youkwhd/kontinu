@@ -31,36 +31,9 @@ _,,)\.~,,._
               \  | | |             )| |  ))
                | | | |             || |  '</pre>
     <script>
-        const pre = document.querySelector("#parent");
-        console.log(pre);
+        const parentElement = document.querySelector("#parent");
 
-        let __elementBefore = pre;
-        for (let i = 0; i < 40; i++) {
-            let el = document.createElement("div");
-            el.style = "height: 60px; width: 60px; background-color: blue; margin-bottom: 5px;";
-            __elementBefore.insertAdjacentElement("afterend", el);
-            __elementBefore = el;
-
-            if (i == 12) {
-                el.style = "height: 60px; width: 60px; background-color: red; margin-bottom: 5px;";
-                console.log(el);
-
-                //scrolly visualviewport
-                console.log(window.scrollY, window.clientHeight);
-
-                // width, height of the element
-                const {clientHeight, clientLeft, clientTop, clientWidth} = el;
-                console.log("Width:", clientWidth, "Height:", clientHeight, "Left:", clientLeft, "Top:", clientTop);
-
-                // offsets
-                const {offsetHeight, offsetLeft, offsetTop, offsetWidth} = el;
-                console.log("Width:", offsetWidth, "Height:", offsetHeight, "Left:", offsetLeft, "Top:", offsetTop);
-            }
-        }
-    </script>
-    <script>
-        return;
-        kontinu.init(document.querySelector("#parent"), (lastElement) => {
+        const update = (lastElement) => {
             const n = 100;
             let elements = new Array(n);
 
@@ -70,14 +43,15 @@ _,,)\.~,,._
                 elements[i] = el;
             }
 
-
             // prepending to the older element, so reverse the array
             elements.reverse();
             elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
 
             elements[0].style = "background-color: red;";
             return elements[0];
-        })
+        }
+
+        kontinu.__init(parentElement, update);
     </script>
 </body>
 </html>
