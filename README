@@ -4,13 +4,6 @@ kontinu
 Typed JavaScript library to create endless scroll with no
 third-party dependency nor Web API involed.
 
-Quick Start
------------
-
-Required dependencies:
-
-    - TypeScript transpiler (tsc, swc)
-
 Building
 --------
 
@@ -18,24 +11,6 @@ Use your favorite TypeScript transpiler, this library is
 configured using swc:
 
     ./build.sh
-
-Usage
------
-
-Simply invoke the function __init():
-
-    kontinu.__init(element.querySelector("#start"), (element: HTMLElement): HTMLElement => {
-        const newElement = document.createElement("div");
-        newElement.style = "width: 50px; height: 50px; background-color: blue";
-        element.insertAdjacentElement("afterend", newElement)); 
-        return newElement;
-    });
-
-The function above requires you to pass a starting element, this
-case I pass an empty div with the id of #start.
-
-It also requires a function callback on intersection which
-should append and return the new element.
 
 Examples
 --------
