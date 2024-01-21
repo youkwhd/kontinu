@@ -1,14 +1,33 @@
 "use strict";
 
+type KontinuConfig = {
+    offset: {
+        top: number,
+        bottom: number,
+    },
+};
+
 type Kontinu = {
-    observe: Function,
+    config: KontinuConfig,
+    observe: (el: HTMLElement, callback: Function, config?: KontinuConfig) => void,
     isIntersecting: (target: HTMLElement) => boolean,
 };
 
 const kontinu: Kontinu = {
-    observe: (el: HTMLElement, callback: Function) => {
+    config: {
+        offset: {
+            top: 0,
+            bottom: 0,
+        },
+    },
+
+    observe: (el: HTMLElement, callback: Function, config?: KontinuConfig) => {
         if (!window || !document) {
             throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
+        }
+
+        if (config) {
+            kontinu.config = config;
         }
 
         if (kontinu.isIntersecting(el)) {
@@ -34,20 +53,7 @@ const kontinu: Kontinu = {
             throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
         }
 
-        /* TODO: option to trigger based on:
-         * 
-         * -> trigger on the top
-         *    +------------+
-         *    |            |
-         *    |            | -> trigger on the middle
-         *    |            | 
-         *    |            |
-         *    +------------+
-         * -> trigger on the bottom
-         * 
-         * Or custom offset in px metrics.
-         */
-        const offset = 0; // px
+        const { offset } = kontinu.config; // px
 
         const elementPosition = { x: el.offsetLeft, y: el.offsetTop };
         const elementHeight = el.clientHeight;
@@ -55,8 +61,8 @@ const kontinu: Kontinu = {
         const screenPosition = { x: window.scrollX, y: window.scrollY };
         const screenHeight = window.innerHeight;
 
-        return (screenPosition.y + screenHeight >= elementPosition.y + offset)
-               && (screenPosition.y <= elementPosition.y + elementHeight);
+        return (screenPosition.y + screenHeight >= elementPosition.y + offset.top)
+               && (screenPosition.y <= elementPosition.y + elementHeight - offset.bottom);
     },
 };
 
