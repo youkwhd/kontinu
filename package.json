@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "swc src/ -d dist/",
-    "upload": "cp README README.md && yarn publish && rm -rf README.md"
+    "upload": "cp README README.md && yarn build && yarn publish && rm -rf README.md"
   },
   "repository": {
     "type": "git",
