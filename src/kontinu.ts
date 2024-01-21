@@ -7,6 +7,10 @@ type Kontinu = {
 
 const kontinu: Kontinu = {
     observe: (el: HTMLElement, callback: Function) => {
+        if (!window || !document) {
+            throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
+        }
+
         if (kontinu.isIntersecting(el)) {
             callback();
             return;
