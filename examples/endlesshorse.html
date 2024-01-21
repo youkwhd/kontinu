@@ -43,9 +43,8 @@ _,,)\.~,,._
                | | | |             || |  '</pre>
     </main>
     <script>
-        const parentElement = document.querySelector("#parent");
-
-        const onIntersection = (lastElement) => {
+        kontinu.__init(document.querySelector("#parent"), (lastElement) => {
+            console.log(lastElement);
             const n = 100;
             let elements = new Array(n);
 
@@ -60,9 +59,7 @@ _,,)\.~,,._
             elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
 
             return elements[0];
-        }
-
-        kontinu.__init(parentElement, onIntersection);
+        });
     </script>
 </body>
 </html>
