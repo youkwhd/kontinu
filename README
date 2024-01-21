@@ -10,7 +10,7 @@ Building
 Use your favorite TypeScript transpiler, this library is
 configured using swc:
 
-    ./build.sh
+    yarn build
 
 Examples
 --------
