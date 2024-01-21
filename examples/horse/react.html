@@ -72,14 +72,14 @@ _,,)\\.~,,._
                     {legs.map((leg, i) => {
                         if (i === legs.length - 1) {
                             return (
-                                <pre key={i} ref={lastElementRef}>
+                                <pre key={`horse-leg:${i}`} ref={lastElementRef}>
                                     {leg}
                                 </pre>
                             );
                         }
 
                         return (
-                            <pre key={i}>
+                            <pre key={`horse-leg:${i}`}>
                                 {leg}
                             </pre>
                         );
