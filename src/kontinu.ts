@@ -49,15 +49,14 @@ const kontinu: Kontinu = {
          */
         const offset = 0; // px
 
-        const elementCoordinates = { x: el.offsetLeft, y: el.offsetTop };
+        const elementPosition = { x: el.offsetLeft, y: el.offsetTop };
         const elementHeight = el.clientHeight;
 
-        // surpasses the element
-        if (window.scrollY > elementCoordinates.y + elementHeight) {
-            return false;
-        }
+        const screenPosition = { x: window.scrollX, y: window.scrollY };
+        const screenHeight = window.innerHeight;
 
-        return window.scrollY + window.innerHeight >= elementCoordinates.y + offset;
+        return (screenPosition.y + screenHeight >= elementPosition.y + offset)
+               && (screenPosition.y <= elementPosition.y + elementHeight);
     },
 };
 
