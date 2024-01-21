@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Kontinu - Api Call Example (React)</title>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        main {
+            width: 580px;
+            padding: 0px 10px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/kontinu.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const COMMENTS_PER_CALL = 5;
+        let currentCommentIndex = 0;
+
+        const Comment = ({ username, message }) => {
+            return (
+                <>
+                    <small style={{ backgroundColor: "#610061" }}>{username}</small>
+                    <p>{message}</p>
+                    <hr />
+                </>
+            )
+        };
+
+        const App = () => { 
+            const [comments, setComments] = React.useState([]);
+            const [isLoading, setIsLoading] = React.useState(false);
+            const lastElementRef = React.useRef(null);
+
+            const addNextComments = () => {
+                setIsLoading(true);
+
+                fetch(`https://dummyjson.com/comments?skip=${currentCommentIndex}&limit=${COMMENTS_PER_CALL}`)
+                    .then((result) => result.json())
+                    .then((json) => {
+                        setComments((prev) => {
+                            currentCommentIndex += COMMENTS_PER_CALL;
+                            setIsLoading(false);
+                            return [...prev, ...json.comments];
+                        });
+                    });
+            };
+
+            React.useEffect(() => addNextComments(), []);
+
+            React.useEffect(() => {
+                if (!lastElementRef.current)
+                    return;
+
+                kontinu.observe(lastElementRef.current, () => addNextComments());
+            }, [comments]);
+
+            return (
+                <main>
+                    <p>All the data below is from <a href="https://dummyjson.com">dummyjson.com</a></p>
+
+                    {comments.map((comment, i) => {
+                        if (i === comments.length - 1) {
+                            return (
+                                <div key={`comment:${i}`} ref={lastElementRef} className="last">
+                                    <Comment username={comment.user.username} message={comment.body}  />
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <div key={`comment:${i}`}>
+                                <Comment username={comment.user.username} message={comment.body}  />
+                            </div>
+                        );
+                    })}
+
+                    {isLoading && (
+                        <span style={{ fontSize: 24, backgroundColor: "white", color: "black" }}>
+                            Loading...
+                        </span>
+                    )}
+                </main>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
