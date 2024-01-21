@@ -1,0 +1,31 @@
+{
+  "name": "kontinu",
+  "version": "0.0.10",
+  "description": "Typed library to create endless scroll with no third-party dependency",
+  "main": "src/index.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "swc src/ -d dist/",
+    "upload": "cp README README.md && yarn publish && rm -rf README.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youkwhd/kontinu.git"
+  },
+  "keywords": [
+    "infinite-scroll"
+  ],
+  "author": "youkwhd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/youkwhd/kontinu/issues"
+  },
+  "homepage": "https://github.com/youkwhd/kontinu"
+}
