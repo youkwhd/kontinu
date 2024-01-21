@@ -1,6 +1,6 @@
 {
   "name": "kontinu",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Typed library to create endless scroll with no third-party dependency",
   "main": "src/index.ts",
   "files": [
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "swc src/ -d dist/",
-    "upload": "cp README README.md ; yarn publish ; rm -rf README.md"
+    "upload": "cp README README.md && yarn publish && rm -rf README.md"
   },
   "repository": {
     "type": "git",
