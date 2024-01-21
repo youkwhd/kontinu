@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Kontinu - Endless Horse Example (React)</title>
+    <style>
+        pre {
+            margin: 0;
+        }
+
+        main {
+            width: 380px;
+            padding-top: 82.5px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/kontinu.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const horseArt = `   ,
+_,,)\\.~,,._
+(()\`  \`\`)\\))),,_
+ |     \\ ''((\\)))),,_          ____
+ |6\`   |   ''((\\())) "-.____.-"    \`-.-,
+ |    .'\\    ''))))'                  \\)))
+ |   |   \`.     ''                     ((((
+ \\, _)     \\/                          |))))
+  \`'        |                          (((((
+            \\                  |       ))))))
+             \`|    |           ,\\     /((((((
+              |   / \`-.______.<  \\   |  )))))
+              |   |  /         \`. \\  \\  ((((
+              |  / \\ |           \`.\\  | (((
+              \\  | | |             )| |  ))
+               | | | |             || |  '`;
+
+        const App = () => { 
+            const [legs, setLegs] = React.useState([]);
+            const lastElementRef = React.useRef(null);
+
+            const addLegs = (n) => {
+                setLegs((prev) => {
+                    let newLegs = new Array(n);
+                    newLegs.fill("	       | | | |             || |  ");
+                    return [...newLegs, ...prev];
+                });
+            };
+
+            React.useEffect(() => addLegs(10), []);
+
+            React.useEffect(() => {
+                if (!lastElementRef.current)
+                    return;
+
+                kontinu.observe(lastElementRef.current, () => addLegs(10));
+            });
+
+            return (
+                <main>
+                    <p>The art is stolen from <a href="http://endless.horse">endless.horse</a></p>
+                    <p>You can try to: </p>
+                    <ul>
+                        <li>Resize the screen</li>
+                        <li>Scroll for infinite horse</li>
+                    </ul>
+                    <pre>{horseArt}</pre>
+                    {legs.map((leg, i) => {
+                        if (i === legs.length - 1) {
+                            return (
+                                <pre key={i} ref={lastElementRef}>
+                                    {leg}
+                                </pre>
+                            );
+                        }
+
+                        return (
+                            <pre key={i}>
+                                {leg}
+                            </pre>
+                        );
+                    })}
+                </main>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
