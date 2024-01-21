@@ -1,32 +1,31 @@
 "use strict";
 
 type Kontinu = {
-    __latestElement: HTMLElement | null,
-    __init: (el: HTMLElement, callback: (element: HTMLElement) => HTMLElement) => void,
-    __onIntersection: Function,
+    observe: Function,
+    isIntersecting: (target: HTMLElement) => boolean,
 };
 
 const kontinu: Kontinu = {
-    __latestElement: null,
-
-    __init: (el: HTMLElement, callback: Function) => {
-        if (!window || !document) {
-            throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
+    observe: (el: HTMLElement, callback: Function) => {
+        if (kontinu.isIntersecting(el)) {
+            callback();
+            return;
         }
 
-        kontinu.__latestElement = el;
-        kontinu.__onIntersection(kontinu.__latestElement, callback);
+        const handleIntersection = () => {
+            if (kontinu.isIntersecting(el)) {
+                callback();
 
-        window.addEventListener("scroll", () => {
-            kontinu.__onIntersection(kontinu.__latestElement, callback);
-        });
+                window.removeEventListener("scroll", handleIntersection);
+                window.removeEventListener("resize", handleIntersection);
+            }
+        };
 
-        window.addEventListener("resize", () => {
-            kontinu.__onIntersection(kontinu.__latestElement, callback);
-        });
+        window.addEventListener("scroll", handleIntersection);
+        window.addEventListener("resize", handleIntersection);
     },
 
-    __onIntersection: (el: HTMLElement, callback: Function) => {
+    isIntersecting: (el: HTMLElement): boolean => {
         if (!window || !document) {
             throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
         }
@@ -51,16 +50,11 @@ const kontinu: Kontinu = {
 
         // surpasses the element
         if (window.scrollY > elementCoordinates.y + elementHeight) {
-            return;
+            return false;
         }
 
-        // intersecting the element
-        if (window.scrollY + window.innerHeight >= elementCoordinates.y + offset) {
-            const newElement: HTMLElement = callback(el);
-            kontinu.__latestElement = newElement; 
-            kontinu.__onIntersection(newElement, callback);
-        }
-    }
+        return window.scrollY + window.innerHeight >= elementCoordinates.y + offset;
+    },
 };
 
 // export default kontinu;
