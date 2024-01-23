@@ -78,16 +78,8 @@ _,,)\\.~,,._
                     </ul>
                     <pre>{horseArt}</pre>
                     {legs.map((leg, i) => {
-                        if (i === legs.length - 1) {
-                            return (
-                                <pre key={`horse-leg:${i}`} ref={lastElementRef}>
-                                    {leg}
-                                </pre>
-                            );
-                        }
-
                         return (
-                            <pre key={`horse-leg:${i}`}>
+                            <pre key={`horse-leg:${i}`} ref={i === legs.length - 1 ? lastElementRef : null}>
                                 {leg}
                             </pre>
                         );

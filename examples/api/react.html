@@ -74,16 +74,8 @@
                     <p>All the data below is from <a href="https://dummyjson.com">dummyjson.com</a></p>
 
                     {comments.map((comment, i) => {
-                        if (i === comments.length - 1) {
-                            return (
-                                <div key={`comment:${i}`} ref={lastElementRef}>
-                                    <Comment username={comment.user.username} message={comment.body}  />
-                                </div>
-                            );
-                        }
-
                         return (
-                            <div key={`comment:${i}`}>
+                            <div key={`comment:${i}`} ref={i === comments.length - 1 ? lastElementRef : null}>
                                 <Comment username={comment.user.username} message={comment.body}  />
                             </div>
                         );
