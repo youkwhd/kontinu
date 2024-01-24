@@ -66,8 +66,7 @@
                 if (!lastElementRef.current)
                     return;
 
-                // console.log(kontinu);
-                kontinu.observe(lastElementRef.current, () => addNextComments());
+                kontinu.observe(lastElementRef.current, addNextComments);
             }, [comments]);
 
             return (
