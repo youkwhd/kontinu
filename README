@@ -12,6 +12,17 @@ use as a browser script, or via package manager:
 
     npm install kontinu
 
+Quick Start
+-----------
+
+To use kontinu, you can observe a HTML element that is the last
+element. Then you can create a function to append more contents
+to the DOM.
+
+    kontinu.observe(lastElement, () => updateDOM());
+
+To be more clear, see the Examples section.
+
 Building
 --------
 
