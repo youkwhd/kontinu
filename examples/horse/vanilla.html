@@ -68,7 +68,7 @@ _,,)\.~,,._
             elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
 
             lastElement = elements[0];
-            kontinu.observe(elements[0], onIntersection);
+            kontinu.observe(lastElement, onIntersection);
         };
 
         kontinu.observe(lastElement, onIntersection);
