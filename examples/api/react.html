@@ -20,7 +20,7 @@
             margin: 0 auto;
         }
     </style>
-    <script type="text/javascript" src="../../dist/kontinu.js"></script>
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -66,6 +66,7 @@
                 if (!lastElementRef.current)
                     return;
 
+                // console.log(kontinu);
                 kontinu.observe(lastElementRef.current, () => addNextComments());
             }, [comments]);
 
@@ -90,7 +91,7 @@
             );
         };
 
-        const container = document.getElementById('root');
+        const container = document.getElementById("root");
         const root = ReactDOM.createRoot(container);
         root.render(<App />);
     </script>

@@ -1,5 +1,3 @@
-"use strict";
-
 type KontinuConfig = {
     offset: {
         top: number,
@@ -66,4 +64,4 @@ const kontinu: Kontinu = {
     },
 };
 
-// export default kontinu;
+export default kontinu;
