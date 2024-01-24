@@ -4,13 +4,27 @@ kontinu
 Typed JavaScript library to create endless scroll with no
 third-party dependency nor Web API involed.
 
+Installing
+----------
+
+You can either copy/paste the source from dist/umd/kontinu.js to
+use as a browser script, or via package manager:
+
+    npm install kontinu
+
 Building
 --------
 
-Use your favorite TypeScript transpiler, this library is
-configured using swc:
+You can use your favorite package manager, install all the
+required developement dependencies:
 
-    yarn build
+    yarn install
+
+To build the project, you can invoke:
+
+    yarn build && yarn build:types
+
+Rollup will build into two types of modules, UMD and ESM.
 
 Examples
 --------
