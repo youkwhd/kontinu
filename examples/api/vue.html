@@ -33,9 +33,7 @@
 
         createApp({
             setup() {
-                /* has to be null, later transformed into an array of element reference
-                 */
-                const commentElements = ref(null);
+                const commentElements = ref([]);
                 const comments = ref([]);
                 const loading = ref(false);
 
