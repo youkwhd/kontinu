@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontinu - API Call Example (Vue)</title>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        main {
+            width: 580px;
+            padding: 0px 10px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        const { createApp, onMounted, watch, ref } = Vue;
+
+        const COMMENTS_PER_CALL = 5;
+        let currentCommentIndex = 0;
+
+        createApp({
+            setup() {
+                /* has to be null, later transformed into an array of element reference
+                 */
+                const commentElements = ref(null);
+                const comments = ref([]);
+                const loading = ref(false);
+
+                const addNextComments = () => {
+                    loading.value = true;
+                    fetch(`https://dummyjson.com/comments?skip=${currentCommentIndex}&limit=${COMMENTS_PER_CALL}`)
+                        .then((response) => response.json())
+                        .then((result) => {
+                            currentCommentIndex += COMMENTS_PER_CALL;
+                            comments.value = [...comments.value, ...result.comments];
+                            loading.value = false;
+                        });
+                };
+
+                addNextComments();
+
+                watch(commentElements,
+                        () => kontinu.observe(commentElements.value[commentElements.value.length - 1], addNextComments),
+                        { deep: true });
+
+                return { comments, commentElements, loading };
+            },
+            template: `
+                <main>
+                    <p>All the data below is from <a href="https://dummyjson.com">dummyjson.com</a></p>
+                    <div v-for="comment in comments" ref="commentElements">
+                        <small style="background-color: #610061;">{{ comment.user.username }}</small>
+                        <p>{{ comment.body }}</p>
+                        <hr />
+                    </div> 
+                    <span v-if="loading" style='font-size: 24px; background-color: white; color: black;'>
+                        Loading...
+                    </span>
+                </main>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>
