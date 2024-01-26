@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontinu - Endless Horse Example (Vue)</title>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        main {
+            width: 380px;
+            padding-top: 82.5px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        const { createApp, onMounted, watch, ref } = Vue;
+
+        const horseArt = `   ,
+_,,)\\.~,,._
+(()\`  \`\`)\\))),,_
+ |     \\ ''((\\)))),,_          ____
+ |6\`   |   ''((\\())) "-.____.-"    \`-.-,
+ |    .'\\    ''))))'                  \\)))
+ |   |   \`.     ''                     ((((
+ \\, _)     \\/                          |))))
+  \`'        |                          (((((
+            \\                  |       ))))))
+             \`|    |           ,\\     /((((((
+              |   / \`-.______.<  \\   |  )))))
+              |   |  /         \`. \\  \\  ((((
+              |  / \\ |           \`.\\  | (((
+              \\  | | |             )| |  ))
+               | | | |             || |  '`;
+
+        const COMMENTS_PER_CALL = 5;
+        let currentCommentIndex = 0;
+
+        createApp({
+            setup() {
+                const parentElement = ref(null);
+                const legElements = ref([]);
+                const legs = ref([]);
+
+                const addLegs = (n) => {
+                    legs.value = [...legs.value, ...Array(n).fill("	       | | | |             || |  ")];
+                };
+
+                /* Only triggers ONCE.
+                 * The element reference should not change after assigned once.
+                 */
+                watch(parentElement, () => kontinu.observe(parentElement.value, () => addLegs(10)));
+
+                watch(legElements,
+                        () => kontinu.observe(legElements.value[legElements.value.length - 1], () => addLegs(10)),
+                        { deep: true });
+
+                return { horseArt, legs, legElements, parentElement };
+            },
+            template: `
+                <main>
+                    <p>The art is stolen from <a href="http://endless.horse">endless.horse</a></p>
+                    <p>You can try to: </p>
+                    <ul>
+                        <li>Resize the screen</li>
+                        <li>Scroll for infinite horse</li>
+                    </ul>
+                    <pre ref="parentElement">{{ horseArt }}</pre>
+                    <pre v-for="leg in legs" ref="legElements">{{ leg }}</pre>
+                </main>
+            `
+        }).mount("#app");
+    </script>
+</body>
+</html>
