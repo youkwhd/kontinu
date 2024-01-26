@@ -59,8 +59,6 @@ _,,)\\.~,,._
                 });
             };
 
-            React.useEffect(() => addLegs(10), []);
-
             React.useEffect(() => {
                 if (!lastElementRef.current)
                     return;
@@ -76,7 +74,7 @@ _,,)\\.~,,._
                         <li>Resize the screen</li>
                         <li>Scroll for infinite horse</li>
                     </ul>
-                    <pre>{horseArt}</pre>
+                    <pre ref={lastElementRef}>{horseArt}</pre>
                     {legs.map((leg, i) => {
                         return (
                             <pre key={`horse-leg:${i}`} ref={i === legs.length - 1 ? lastElementRef : null}>
