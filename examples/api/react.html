@@ -50,12 +50,12 @@
                 setIsLoading(true);
 
                 fetch(`https://dummyjson.com/comments?skip=${currentCommentIndex}&limit=${COMMENTS_PER_CALL}`)
-                    .then((result) => result.json())
-                    .then((json) => {
+                    .then((response) => response.json())
+                    .then((result) => {
                         setComments((prev) => {
                             currentCommentIndex += COMMENTS_PER_CALL;
                             setIsLoading(false);
-                            return [...prev, ...json.comments];
+                            return [...prev, ...result.comments];
                         });
                     });
             };
