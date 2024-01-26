@@ -55,7 +55,7 @@ _,,)\\.~,,._
 
             const addLegs = (n) => {
                 setLegs((prev) => {
-                    return [...Array(n).fill("	       | | | |             || |  "), ...prev];
+                    return [...prev, ...Array(n).fill("	       | | | |             || |  ")];
                 });
             };
 
