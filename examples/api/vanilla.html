@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
+    <title>Kontinu - API Call Example (Vanilla)</title>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        main {
+            width: 580px;
+            padding: 0px 10px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <p id="__entryElement">All the data below is from <a href="https://dummyjson.com">dummyjson.com</a></p>
+        <span id="__loadingElement" style="font-size: 24px; background-color: white; color: black;">
+            Loading...
+        </span>
+    </main>
+    <script>
+        const COMMENTS_PER_CALL = 5;
+        let currentCommentIndex = 0;
+
+        const loadingElement = document.querySelector("#__loadingElement");
+        let lastElement = document.querySelector("#__entryElement");
+
+        const onIntersection = () => {
+            /* display the loading element
+             */
+            loadingElement.style.display = "";
+
+            fetch(`https://dummyjson.com/comments?skip=${currentCommentIndex}&limit=${COMMENTS_PER_CALL}`)
+                .then((response) => response.json())
+                .then((result) => {
+                    if (result.comments.length <= 0) {
+                        loadingElement.style.display = "none";
+                        return;
+                    }
+
+                    let elements = [];
+
+                    currentCommentIndex += COMMENTS_PER_CALL;
+
+                    result.comments.forEach((comment) => {
+                        let div = document.createElement("div");
+
+                        let sm = document.createElement("small");
+                        sm.style = "background-color: #610061;";
+                        sm.innerText = comment.user.username;
+
+                        let p = document.createElement("p");
+                        p.innerText = comment.body;
+
+                        let hr = document.createElement("hr");
+
+                        div.appendChild(sm);
+                        div.appendChild(p);
+                        div.appendChild(hr);
+                        elements.push(div);
+
+                    });
+
+                    // prepending to the older element, so reverse the array
+                    elements.reverse();
+                    elements.forEach((el) => lastElement.insertAdjacentElement("afterend", el));
+
+                    loadingElement.style.display = "none";
+                    lastElement = elements[0];
+                    kontinu.observe(lastElement, onIntersection);
+                });
+        };
+
+        kontinu.observe(lastElement, onIntersection);
+    </script>
+</body>
+</html>
