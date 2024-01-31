@@ -61,7 +61,7 @@ _,,)\\.~,,._
         };
 
         m.mount(document.body, {
-            legs: [m("pre", horseArt)],
+            legs: [horseArt],
             oncreate: (vnode) => updateLegs(vnode),
             onupdate: (vnode) => updateLegs(vnode),
             view: (vnode) => {
