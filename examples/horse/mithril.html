@@ -47,7 +47,7 @@ _,,)\\.~,,._
               \\  | | |             )| |  ))
                | | | |             || |  '`;
         
-        const drawLegs = (vnode) => {
+        const updateLegs = (vnode) => {
             const nodeRoot = vnode.dom;
             const lastLeg = nodeRoot.querySelector(`pre[lastLeg]`);
 
@@ -62,8 +62,8 @@ _,,)\\.~,,._
 
         m.mount(document.body, {
             legs: [m("pre", horseArt)],
-            oncreate: (vnode) => drawLegs(vnode),
-            onupdate: (vnode) => drawLegs(vnode),
+            oncreate: (vnode) => updateLegs(vnode),
+            onupdate: (vnode) => updateLegs(vnode),
             view: (vnode) => {
                 return m("main",
                     m("p", "The art is stolen from ", m("a", { href: "http://endless.horse" }, "endless.horse")),
