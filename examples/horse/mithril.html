@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontinu - Endless Horse Example (Mithril)</title>
+    <script src="https://unpkg.com/mithril/mithril.js"></script>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        main {
+            width: 380px;
+            padding-top: 82.5px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
+    <script src="https://unpkg.com/mithril/mithril.js"></script>
+</head>
+<body>
+    <script>
+        const horseArt = `   ,
+_,,)\\.~,,._
+(()\`  \`\`)\\))),,_
+ |     \\ ''((\\)))),,_          ____
+ |6\`   |   ''((\\())) "-.____.-"    \`-.-,
+ |    .'\\    ''))))'                  \\)))
+ |   |   \`.     ''                     ((((
+ \\, _)     \\/                          |))))
+  \`'        |                          (((((
+            \\                  |       ))))))
+             \`|    |           ,\\     /((((((
+              |   / \`-.______.<  \\   |  )))))
+              |   |  /         \`. \\  \\  ((((
+              |  / \\ |           \`.\\  | (((
+              \\  | | |             )| |  ))
+               | | | |             || |  '`;
+        
+        const drawLegs = (vnode) => {
+            const nodeRoot = vnode.dom;
+            const lastLeg = nodeRoot.querySelector(`pre[lastLeg]`);
+
+            kontinu.observe(lastLeg, () => {
+                for (let i = 0; i < 5; i++) {
+                    vnode.state.legs.push("	       | | | |             || |  ");
+                }
+
+                m.redraw();
+            });
+        };
+
+        m.mount(document.body, {
+            legs: [m("pre", horseArt)],
+            oncreate: (vnode) => drawLegs(vnode),
+            onupdate: (vnode) => drawLegs(vnode),
+            view: (vnode) => {
+                return m("main",
+                    m("p", "The art is stolen from ", m("a", { href: "http://endless.horse" }, "endless.horse")),
+                    m("p", "You can try to:"),
+                    m("ul",
+                        m("li", "Resize the screen"),
+                        m("li", "Scroll for infinite horse")),
+                    vnode.state.legs.map((leg, i) => 
+                        m("pre", i == vnode.state.legs.length - 1 ?
+                                    { lastLeg: "" } : {}, leg)));
+            }
+        });
+    </script>
+</body>
+</html>
