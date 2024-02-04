@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontinu - Endless Horse Example (Preact)</title>
+    <style>
+        html, body {
+            color: #dcdbd8;
+            background-color: #17191a;
+        }
+
+        a {
+            color: #308af2;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        main {
+            width: 380px;
+            padding-top: 82.5px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript" src="../../dist/umd/kontinu.js"></script>
+    <script src="https://unpkg.com/preact"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const { Component, render, h, createRef } = window.preact;
+
+        const horseArt = `   ,
+_,,)\\.~,,._
+(()\`  \`\`)\\))),,_
+ |     \\ ''((\\)))),,_          ____
+ |6\`   |   ''((\\())) "-.____.-"    \`-.-,
+ |    .'\\    ''))))'                  \\)))
+ |   |   \`.     ''                     ((((
+ \\, _)     \\/                          |))))
+  \`'        |                          (((((
+            \\                  |       ))))))
+             \`|    |           ,\\     /((((((
+              |   / \`-.______.<  \\   |  )))))
+              |   |  /         \`. \\  \\  ((((
+              |  / \\ |           \`.\\  | (((
+              \\  | | |             )| |  ))
+               | | | |             || |  '`;
+        
+        class App extends Component {
+            lastElementRef = createRef();
+
+            constructor() {
+                super();
+                this.state = { legs: [horseArt] };
+            }
+
+            updateLegs = () => {
+                kontinu.observe(this.lastElementRef.current, () => {
+                    this.setState((prev) => ({ legs: [...prev.legs, ...Array(10).fill("	       | | | |             || |  ")] }));
+                });
+            }
+
+            componentDidMount() {
+                this.updateLegs();
+            }
+
+            componentDidUpdate() {
+                this.updateLegs();
+            }
+
+            render(props, state) {
+                return h("main", null,
+                    h("p", null, "The art is stolen from ", h("a", { href: "http://endless.horse" }, "endless.horse")),
+                    h("p", null, "You can try to:"),
+                    h("ul", null,
+                        h("li", null, "Resize the screen"),
+                        h("li", null, "Scroll for infinite horse")),
+                    state.legs.map((leg, i) => 
+                        h("pre", i === state.legs.length - 1 ?
+                            { ref: this.lastElementRef } : null, leg)));
+            }
+        };
+
+        render(h(App), document.querySelector("#root"));
+    </script>
+</body>
+</html>
