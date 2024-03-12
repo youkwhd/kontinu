@@ -1,3 +1,8 @@
+/* Copyright (c) 2024, youkwhd <lolywk@tutanota.com>
+ *
+ * MIT Licensed
+ */
+
 type KontinuConfig = {
     offset: {
         top: number,
