@@ -1,6 +1,6 @@
 {
   "name": "kontinu",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "Typed library to create endless scroll with no third-party dependency",
   "type": "module",
   "main": "dist/esm/kontinu.js",
