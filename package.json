@@ -12,8 +12,8 @@
   ],
   "exports": {
     ".": {
-      "require": "./dist/umd/kontinu.js",
-      "import": "./dist/esm/kontinu.js"
+      "require": "dist/umd/kontinu.js",
+      "import": "dist/esm/kontinu.js"
     }
   },
   "directories": {

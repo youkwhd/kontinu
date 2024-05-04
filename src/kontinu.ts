@@ -3,34 +3,15 @@
  * MIT Licensed
  */
 
-type KontinuConfig = {
-    offset: {
-        top: number,
-        bottom: number,
-    },
-};
-
 type Kontinu = {
-    config: KontinuConfig,
-    observe: (el: HTMLElement, callback: Function, config?: KontinuConfig) => void,
+    observe: (el: HTMLElement, callback: Function) => void,
     isIntersecting: (target: HTMLElement) => boolean,
 };
 
 const kontinu: Kontinu = {
-    config: {
-        offset: {
-            top: 0,
-            bottom: 0,
-        },
-    },
-
-    observe: (el: HTMLElement, callback: Function, config?: KontinuConfig) => {
+    observe: (el: HTMLElement, callback: Function) => {
         if (!window || !document) {
             throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
-        }
-
-        if (config) {
-            kontinu.config = config;
         }
 
         if (kontinu.isIntersecting(el)) {
@@ -56,16 +37,14 @@ const kontinu: Kontinu = {
             throw new Error("Kontinu: Could not find the global variable `window`, perhaps wait for the DOM to load.");
         }
 
-        const { offset } = kontinu.config; // px
-
         const elementPosition = { x: el.offsetLeft, y: el.offsetTop };
         const elementHeight = el.clientHeight;
 
         const screenPosition = { x: window.scrollX, y: window.scrollY };
         const screenHeight = window.innerHeight;
 
-        return (screenPosition.y + screenHeight >= elementPosition.y + offset.top)
-               && (screenPosition.y <= elementPosition.y + elementHeight - offset.bottom);
+        return (screenPosition.y + screenHeight >= elementPosition.y)
+               && (screenPosition.y <= elementPosition.y + elementHeight);
     },
 };
 
