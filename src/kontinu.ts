@@ -27,7 +27,7 @@ const observe = (el: HTMLElement, callback: Function) => {
     window.addEventListener("resize", handleIntersection);
 };
 
-const isIntersecting =  (el: HTMLElement): boolean => {
+const isIntersecting = (el: HTMLElement): boolean => {
     const elementPosition = { x: el.offsetLeft, y: el.offsetTop };
     const elementHeight = el.clientHeight;
 
