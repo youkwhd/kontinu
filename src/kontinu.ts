@@ -5,17 +5,27 @@
 
 type Kontinu = {
     observe: (el: HTMLElement, callback: Function) => void,
-    isIntersecting: (target: HTMLElement) => boolean,
+    isIntersecting: (wrapperElement: HTMLElement, target: HTMLElement) => boolean,
+};
+
+const findWrapperElement = (el: HTMLElement): HTMLElement => {
+    do {
+        el = el.parentElement!!;
+    } while (el.parentElement && !(el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight));
+ 
+    return el;
 };
 
 const observe = (el: HTMLElement, callback: Function) => {
-    if (isIntersecting(el)) {
+    const wrapperElement = findWrapperElement(el);
+
+    if (isIntersecting(wrapperElement, el)) {
         callback();
         return;
     }
 
     const handleIntersection = () => {
-        if (isIntersecting(el)) {
+        if (isIntersecting(wrapperElement, el)) {
             callback();
 
             window.removeEventListener("scroll", handleIntersection);
@@ -27,15 +37,19 @@ const observe = (el: HTMLElement, callback: Function) => {
     window.addEventListener("resize", handleIntersection);
 };
 
-const isIntersecting = (el: HTMLElement): boolean => {
+const isIntersecting = (wrapperElement: HTMLElement, el: HTMLElement): boolean => {
     const elementPosition = { x: el.offsetLeft, y: el.offsetTop };
-    const elementHeight = el.clientHeight;
+    const elementHeight = el.offsetHeight;
+    const elementWidth = el.offsetWidth;
 
-    const screenPosition = { x: window.scrollX, y: window.scrollY };
-    const screenHeight = window.innerHeight;
+    const wrapperPosition = { x: wrapperElement.offsetLeft + wrapperElement.scrollLeft, y: wrapperElement.offsetTop + wrapperElement.scrollTop };
+    const wrapperHeight = wrapperElement.clientHeight;
+    const wrapperWidth = wrapperElement.clientWidth;
 
-    return (screenPosition.y + screenHeight >= elementPosition.y)
-           && (screenPosition.y <= elementPosition.y + elementHeight);
+    const isIntersectingVertically = (wrapperPosition.y + wrapperHeight >= elementPosition.y) && (wrapperPosition.y <= elementPosition.y + elementHeight);
+    const isIntersectingHorizontally = (wrapperPosition.x + wrapperWidth >= elementPosition.x) && (wrapperPosition.x <= elementPosition.x + elementWidth); 
+
+    return isIntersectingVertically && isIntersectingHorizontally;
 };
 
 const kontinu: Kontinu = { observe, isIntersecting };
