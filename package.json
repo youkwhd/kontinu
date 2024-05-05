@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Typed library to create endless scroll with no third-party dependency",
   "type": "module",
-  "main": "dist/esm/kontinu.js",
-  "types": "dist/kontinu.d.ts",
+  "main": "./dist/esm/kontinu.js",
+  "types": "./dist/kontinu.d.ts",
   "files": [
     "dist/",
     "README.md",
@@ -12,15 +12,16 @@
   ],
   "exports": {
     ".": {
-      "require": "dist/umd/kontinu.js",
-      "import": "dist/esm/kontinu.js"
+      "types": "./dist/kontinu.d.ts",
+      "require": "./dist/umd/kontinu.js",
+      "import": "./dist/esm/kontinu.js"
     }
   },
   "directories": {
     "example": "examples"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.js && yarn build:types",
     "build:watch": "rollup -wc rollup.config.js",
     "build:types": "tsc -t esnext --moduleResolution node -d --emitDeclarationOnly --outFile dist/kontinu.d.ts src/kontinu.ts",
     "upload": "mv README README.md && yarn build && yarn build:types && yarn publish && mv README.md README"

@@ -33,7 +33,7 @@ required developement dependencies:
 
 To build the project, you can invoke:
 
-    yarn build && yarn build:types
+    yarn build
 
 Rollup will build into two types of modules, UMD and ESM.
 
