@@ -18,29 +18,29 @@ const findWrapperElement = (el: HTMLElement): HTMLElement => {
 
 const observe = (el: HTMLElement, callback: Function) => {
     const wrapperElement = findWrapperElement(el);
-    const listener = wrapperElement === window.document.documentElement ? window : wrapperElement;
+    const listenerElement = wrapperElement === window.document.documentElement ? window : wrapperElement;
 
-    if (isIntersecting(wrapperElement, el)) {
+    if (isIntersecting(listenerElement, el)) {
         callback();
         return;
     }
 
     const handleIntersection = () => {
-        if (isIntersecting(wrapperElement, el)) {
+        if (isIntersecting(listenerElement, el)) {
             callback();
 
-            listener.removeEventListener("scroll", handleIntersection);
-            listener.removeEventListener("resize", handleIntersection);
+            listenerElement.removeEventListener("scroll", handleIntersection);
+            listenerElement.removeEventListener("resize", handleIntersection);
 
-            if (listener !== window)
+            if (listenerElement !== window)
                 window.removeEventListener("resize", handleIntersection);
         }
     };
 
-    listener.addEventListener("scroll", handleIntersection);
-    listener.addEventListener("resize", handleIntersection);
+    listenerElement.addEventListener("scroll", handleIntersection);
+    listenerElement.addEventListener("resize", handleIntersection);
 
-    if (listener !== window)
+    if (listenerElement !== window)
         window.addEventListener("resize", handleIntersection);
 };
 
