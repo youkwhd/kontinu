@@ -20,13 +20,13 @@ const observe = (el: HTMLElement, callback: Function) => {
     const wrapperElement = findWrapperElement(el);
     const listenerElement = wrapperElement === window.document.documentElement ? window : wrapperElement;
 
-    if (isIntersecting(listenerElement, el)) {
+    if (isIntersecting(wrapperElement, el)) {
         callback();
         return;
     }
 
     const handleIntersection = () => {
-        if (isIntersecting(listenerElement, el)) {
+        if (isIntersecting(wrapperElement, el)) {
             callback();
 
             listenerElement.removeEventListener("scroll", handleIntersection);
