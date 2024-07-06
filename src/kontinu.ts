@@ -3,11 +3,6 @@
  * MIT Licensed
  */
 
-type Kontinu = {
-    observe: (el: HTMLElement, callback: Function) => void,
-    isIntersecting: (wrapperElement: HTMLElement, target: HTMLElement) => boolean,
-};
-
 const findWrapperElement = (el: HTMLElement): HTMLElement => {
     do {
         el = el.parentElement!!;
@@ -59,5 +54,4 @@ const isIntersecting = (wrapperElement: HTMLElement, el: HTMLElement): boolean =
     return isIntersectingVertically && isIntersectingHorizontally;
 };
 
-const kontinu: Kontinu = { observe, isIntersecting };
-export default kontinu;
+export default { observe, isIntersecting };
