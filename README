@@ -29,11 +29,11 @@ Building
 You can use your favorite package manager, install all the
 required developement dependencies:
 
-    yarn install
+    bun install
 
 To build the project, you can invoke:
 
-    yarn build
+    bun build
 
 Rollup will build into two types of modules, UMD and ESM.
 

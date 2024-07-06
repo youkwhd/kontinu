@@ -21,10 +21,10 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js && yarn build:types",
+    "build": "rollup -c rollup.config.js && bun build:types",
     "build:watch": "rollup -wc rollup.config.js",
     "build:types": "tsc -t esnext --moduleResolution node -d --emitDeclarationOnly --outFile dist/kontinu.d.ts src/kontinu.ts",
-    "upload": "mv README README.md && yarn build && yarn publish && mv README.md README"
+    "upload": "mv README README.md && bun build && bun publish && mv README.md README"
   },
   "repository": {
     "type": "git",
